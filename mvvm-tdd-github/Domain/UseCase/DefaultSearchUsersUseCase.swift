@@ -7,10 +7,19 @@
 //
 
 import Foundation
+import RxSwift
 
 class DefaultSearchUsersUseCase: SearchUsersUseCase {
     
-    func searchUsers(q: String, sort: String, order: String) {
+    private let repo: GithubRepository
+    
+    init(repo: GithubRepository) {
+        self.repo = repo
+    }
+    
+    func searchUsers(keyword: String, sort: String, order: String) -> Observable<[SearchUserModel]> {
+        self.repo.searchUsers(keyword: keyword, sort: sort, order: order)
+        return .just([])
     }
     
 }

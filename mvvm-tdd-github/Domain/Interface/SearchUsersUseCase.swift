@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol SearchUsersUseCase {
-    func searchUsers(q: String, sort: String, order: String)
+    func searchUsers(keyword: String, sort: String, order: String) -> Observable<[SearchUserModel]>
 }
