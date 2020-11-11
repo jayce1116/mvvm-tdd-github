@@ -18,8 +18,7 @@ class DefaultSearchUsersUseCase: SearchUsersUseCase {
     }
     
     func searchUsers(keyword: String, sort: String, order: String) -> Observable<[SearchUserModel]> {
-        self.repo.searchUsers(keyword: keyword, sort: sort, order: order)
-        return .just([])
+        return self.repo.searchUsers(keyword: keyword, sort: sort, order: order)
     }
     
 }

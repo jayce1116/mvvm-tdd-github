@@ -1,5 +1,5 @@
 //
-//  HTTPSession.swift
+//  StubHTTPSession.swift
 //  mvvm-tdd-github
 //
 //  Created by jsshin on 2020/11/10.
@@ -9,10 +9,14 @@
 import Foundation
 import RxSwift
 
-class HTTPSession: GithubRepository {
+class StubHTTPSession: GithubRepository {
+    
+    var searchUsersCallCount = 0
+    
+    var searchItem: [SearchUserModel] = []
     
     func searchUsers(keyword: String, sort: String, order: String) -> Observable<[SearchUserModel]> {
-        return .just([])
+        searchUsersCallCount += 1
+        return .just(searchItem)
     }
-    
 }

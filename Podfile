@@ -20,6 +20,8 @@ target 'mvvm-tdd-github' do
     inherit! :search_paths
     # Pods for testing
     pods
+    pod 'RxBlocking'
+    pod 'RxTest'
   end
 
   target 'mvvm-tdd-githubUITests' do

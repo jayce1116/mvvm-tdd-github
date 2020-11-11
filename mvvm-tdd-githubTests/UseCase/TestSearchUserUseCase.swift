@@ -9,27 +9,54 @@
 import XCTest
 import RxCocoa
 import RxSwift
+import RxBlocking
 @testable import mvvm_tdd_github
 
 class TestSearchUserUseCase: XCTestCase {
     
-    var mockRepo: GithubRepository!
+    var stubRepo: StubHTTPSession!
     var useCase: SearchUsersUseCase!
-    var disposeBag: DisposeBag!
 
     override func setUpWithError() throws {
-        mockRepo = MockHTTPSession()
-        useCase = DefaultSearchUsersUseCase(repo: mockRepo)
-        disposeBag = DisposeBag()
+        stubRepo = StubHTTPSession()
+        useCase = DefaultSearchUsersUseCase(repo: stubRepo)
     }
 
     override func tearDownWithError() throws {
-        mockRepo = nil
+        stubRepo = nil
         useCase = nil
-        disposeBag = nil
     }
     
     func testSearchEmptyKeyword() {
+        // given
+        let keyword = ""
+        
+        // when
+        let result = try! useCase.searchUsers(keyword: keyword, sort: "", order: "")
+            .toBlocking()
+            .single()
+        
+        // then
+        XCTAssertEqual(stubRepo.searchUsersCallCount, 1)
+        XCTAssertEqual(result.count, 0)
+    }
+    
+    func testSearchAndThreeResult() {
+        // given
+        let keyword = ""
+        
+        stubRepo.searchItem.append(SearchUserModel(name: "", thumbnailUrl: ""))
+        stubRepo.searchItem.append(SearchUserModel(name: "", thumbnailUrl: ""))
+        stubRepo.searchItem.append(SearchUserModel(name: "", thumbnailUrl: ""))
+        
+        // when
+        let result = try! useCase.searchUsers(keyword: keyword, sort: "", order: "")
+            .toBlocking()
+            .single()
+        
+        // then
+        XCTAssertEqual(stubRepo.searchUsersCallCount, 1)
+        XCTAssertEqual(result.count, 3)
     }
     
 }
