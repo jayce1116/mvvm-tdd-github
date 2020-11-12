@@ -11,6 +11,12 @@ import RxSwift
 
 class HTTPSession: GithubRepository {
     
+    static let shared = HTTPSession()
+    
+    private init() {
+        
+    }
+    
     func searchUsers(keyword: String, sort: String, order: String) -> Observable<[SearchUserModel]> {
         return .just([])
     }

@@ -16,7 +16,6 @@ protocol SearchViewModelInputs {
 }
 
 protocol SearchViewModelOutputs {
-    var enabledSearchButon: Driver<Bool> { get }
     var searchResults: Driver<[SearchUserModel]> { get }
 }
 
@@ -41,7 +40,6 @@ class SearchViewModel: SearchViewModelType, SearchViewModelInputs, SearchViewMod
     
     func setKeyword(keyword: String) {
         self.keyword = keyword
-        _enabledSearchButton.accept(!self.keyword.isEmpty)
     }
     
     func search() {
@@ -53,10 +51,6 @@ class SearchViewModel: SearchViewModelType, SearchViewModelInputs, SearchViewMod
     var outputs: SearchViewModelOutputs { return self }
     
     private let _searchResults = BehaviorRelay<[SearchUserModel]>.init(value: [])
-    
     var searchResults: Driver<[SearchUserModel]> { return _searchResults.asDriver(onErrorJustReturn: []) }
-    
-    private let _enabledSearchButton = BehaviorRelay<Bool>.init(value: false)
-    var enabledSearchButon: Driver<Bool> { return _enabledSearchButton.asDriver(onErrorJustReturn: false) }
     
 }

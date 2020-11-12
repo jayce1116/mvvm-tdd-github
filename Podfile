@@ -7,6 +7,7 @@ def pods
   pod 'RxSwift'
   pod 'Alamofire'
   pod 'RxAlamofire'
+  pod 'RxDataSources'
 end
 
 target 'mvvm-tdd-github' do
